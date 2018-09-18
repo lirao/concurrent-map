@@ -26,6 +26,15 @@ func New() ConcurrentMap {
 	return m
 }
 
+// Creates a new concurrent map.
+func NewFromMap(input map[string]interface{}) ConcurrentMap {
+	m := New()
+	for k, v := range input {
+		m.Set(k, v)
+	}
+	return m
+}
+
 // Returns shard under given key
 func (m ConcurrentMap) GetShard(key string) *ConcurrentMapShared {
 	return m[uint(fnv32(key))%uint(SHARD_COUNT)]
